@@ -1,14 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
-import { Routes } from './Routes'
+import React, { useContext } from 'react'
 import Login from './pages/Login'
 import { Context } from './Context'
-import React, { useContext, useState } from 'react'
+import { Rout } from './Routes'
+import './App.css';
 
-   const App = () => {
+const App = () => {
   const { isAuth, userLogged } = useContext(Context)
-
-  return !isAuth ? <Login></Login> : userLogged && <Routes userLogged={userLogged} />
+  return !isAuth ? <Login></Login> : userLogged && <Rout userLogged={userLogged} />
 }
 
 export default App

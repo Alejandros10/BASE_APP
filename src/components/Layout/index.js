@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { Context } from '../../Context'
-
+import { GLOBALS } from '../../utils/Globals'
+import { AppMenu } from '../AppMenu'
+import { AppFooter } from '../AppFooter'
+import { AppProfile } from '../AppProfile'
+import { AppTopbar } from '../AppTopbar'
 export class Layout extends Component {
     static contextType = Context
 
@@ -104,17 +108,17 @@ export class Layout extends Component {
     }
 
     componentDidMount() {
-        const isConsultor = this.context.userLogged.role === GLOBALS.roles.consultor.id
+        const isUser = this.context.userLogged.role === GLOBALS.roles.user.id
 
         const isMenuVisible = this.props.isMenuVisible !== undefined ? this.props.isMenuVisible : true
 
         this.setState({
-            staticMenuInactive: !(isMenuVisible && !isConsultor),
+            staticMenuInactive: !(isMenuVisible && !isUser),
         })
 
         this.setState({
             userLogged: this.context.userLogged,
-            isUserLoggedAgent: isConsultor,
+            isUserLoggedAgent: isUser,
         })
     }
 
@@ -143,7 +147,7 @@ export class Layout extends Component {
         })
 
         return ( < div className = { wrapperClass } onClick = { this.onWrapperClick } >
-    {/*       <AppTopbar showToggler = {!this.state.isUserLoggedAgent }onToggleMenu = { this.onToggleMenu }/>   */}
+    {<AppTopbar showToggler = {!this.state.isUserLoggedAgent }onToggleMenu = { this.onToggleMenu }/>}
 
             {
                 !this.state.isUserLoggedAgent ? ( < div ref = {
@@ -154,14 +158,14 @@ export class Layout extends Component {
                     <div className = "layout-logo" >
                     <img alt = "Logo" src = { logo } width = "250" / >
                     </div>
-                    <AppProfile / >
+                    {<AppProfile/>}
                     < AppMenu model = { this.menu } showToggler = {!this.state.isUserLoggedAgent } onToggleMenu = { this.onToggleMenu } onMenuItemClick = { this.onMenuItemClick }/> </div>
                 ) : ( 
                 <div/>
                 )
             }
             <div className = "layout-main" > { this.props.children } </div>
-            < AppFooter / >
+            {< AppFooter/>}
             <div className = "layout-mask" > </div> </div>
         )
     }
